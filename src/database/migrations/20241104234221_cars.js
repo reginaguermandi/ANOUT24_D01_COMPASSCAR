@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
 	return knex.schema.createTable("cars", (table) => {
-		table.increments("id").primary;
+		table.increments("id").unsigned().primary();
 		table.text("brand").notNullable();
 		table.text("model").notNullable();
 		table.varchar("plate", 10).unique().notNullable();

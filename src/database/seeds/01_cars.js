@@ -6,7 +6,6 @@ exports.seed = async function (knex) {
 	// Deletes ALL existing entries
 	await knex("cars").del();
 	await knex("cars").insert([
-		{ brand: "Toyota", model: "Corolla", plate: "ABC-1A23", year: 2018 },
 		{ brand: "Honda", model: "Civic", plate: "DEF-2B34", year: 2020 },
 		{ brand: "Ford", model: "Mustang", plate: "GHI-3C45", year: 2017 },
 		{ brand: "Chevrolet", model: "Cruze", plate: "JKL-4D56", year: 2019 },
