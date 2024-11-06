@@ -19,11 +19,14 @@ module.exports = {
 				year,
 				plate,
 			});
+
+			if (newCar.errors) {
+				res.status(400).json({ errors: newCar.errors });
+				return;
+			}
+
 			return res.status(201).send(newCar);
 		} catch (error) {
-			if (error.name === "ValidationError") {
-				return res.status(400).send({ error: error.message });
-			}
 			return res.status(500).send({ error: error.message });
 		}
 	},
