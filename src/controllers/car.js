@@ -1,4 +1,5 @@
 const carService = require("../services/cars");
+const itemService = require("../services/items");
 
 module.exports = {
 	async findAll(req, res) {
@@ -21,11 +22,10 @@ module.exports = {
 			});
 
 			if (newCar.errors) {
-				// Verifica se o erro é relacionado à placa já registrada
 				if (newCar.errors.includes("plate already registered")) {
 					return res.status(409).json({ errors: newCar.errors });
 				}
-				// Caso contrário, retorna os erros com o status 400
+
 				return res.status(400).json({ errors: newCar.errors });
 			}
 			return res.status(201).send(newCar);
