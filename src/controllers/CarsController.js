@@ -21,10 +21,13 @@ module.exports = {
 			});
 
 			if (newCar.errors) {
-				res.status(400).json({ errors: newCar.errors });
-				return;
+				// Verifica se o erro é relacionado à placa já registrada
+				if (newCar.errors.includes("plate already registered")) {
+					return res.status(409).json({ errors: newCar.errors });
+				}
+				// Caso contrário, retorna os erros com o status 400
+				return res.status(400).json({ errors: newCar.errors });
 			}
-
 			return res.status(201).send(newCar);
 		} catch (error) {
 			return res.status(500).send({ error: error.message });

@@ -1,11 +1,15 @@
 const carRepository = require("../repository/cars");
-const ValidationError = require("../middleware/post_entry_validation");
 const maxYearLimit = require("../middleware/year_validation");
 const plateFormat = require("../middleware/plate_validations");
 
 module.exports = {
 	async createCar(carData) {
 		const errors = [];
+
+		const existingCar = await carRepository.findPlate(carData.plate);
+		if (existingCar) {
+			return { errors: ["car already registered"] };
+		}
 
 		if (!carData.brand) errors.push("brand is required");
 		if (!carData.model) errors.push("model is required");

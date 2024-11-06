@@ -7,4 +7,8 @@ module.exports = {
 
 		return lastInsertion;
 	},
+
+	async findPlate(plate) {
+		return await knex("cars").where("plate", plate).first();
+	},
 };
