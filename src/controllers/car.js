@@ -41,6 +41,11 @@ module.exports = {
 			const items = req.body;
 
 			const newItems = await itemService.insertCarItems(carId, items);
+
+			if (newItems.errors) {
+				return res.status(400).json(newItems);
+			}
+
 			return res.status(204).json(newItems);
 		} catch (error) {
 			return res.status(500).json({ errors: error.message });
