@@ -2,10 +2,10 @@ const knex = require("../database/config");
 
 module.exports = {
 	async deleteItemsByCarId(carId) {
-		return (await knex("cars_items").where("car_id")).del();
+		return await knex("cars_items").where("car_id", carId).del();
 	},
 
-	async insertItems(itemRecords) {
-		return await knex("cars_items").insert(itemRecords);
+	async insertItems(existingCar, newItems) {
+		return await knex("cars_items").where(existingCar).insert(newItems);
 	},
 };

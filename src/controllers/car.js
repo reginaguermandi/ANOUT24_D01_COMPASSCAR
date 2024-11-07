@@ -1,3 +1,4 @@
+const { update } = require("../database/config");
 const carService = require("../services/cars");
 const itemService = require("../services/items");
 
@@ -31,6 +32,18 @@ module.exports = {
 			return res.status(201).send(newCar);
 		} catch (error) {
 			return res.status(500).send({ error: error.message });
+		}
+	},
+
+	async updateItems(req, res) {
+		try {
+			const carId = req.params.id;
+			let items = req.body;
+
+			const newItems = await itemService.insertCarItems(carId, items);
+			return res.status(204).json(newItems);
+		} catch (error) {
+			return res.status(500).json({ errors: error.message });
 		}
 	},
 };
