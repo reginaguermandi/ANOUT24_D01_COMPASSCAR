@@ -38,7 +38,7 @@ module.exports = {
 	async updateItems(req, res) {
 		try {
 			const carId = req.params.id;
-			let items = req.body;
+			const items = req.body;
 
 			const newItems = await itemService.insertCarItems(carId, items);
 			return res.status(204).json(newItems);

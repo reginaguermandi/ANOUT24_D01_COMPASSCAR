@@ -5,7 +5,10 @@ module.exports = {
 		return await knex("cars_items").where("car_id", carId).del();
 	},
 
-	async insertItems(existingCar, newItems) {
-		return await knex("cars_items").where(existingCar).insert(newItems);
+	async insertItems(carId, newItems) {
+		return await knex("cars_items").insert({
+			name: newItems.name,
+			car_id: carId,
+		});
 	},
 };
