@@ -15,4 +15,8 @@ module.exports = {
 	async findCarById(carId) {
 		return await knex("cars").where("id", carId).first();
 	},
+
+	async carWithItems(carId) {
+		return await knex("cars_items").select("name").where("car_id", carId);
+	},
 };
