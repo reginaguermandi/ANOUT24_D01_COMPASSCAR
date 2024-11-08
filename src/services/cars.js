@@ -27,4 +27,15 @@ module.exports = {
 		const newCar = await carRepository.insertCar(carData);
 		return newCar;
 	},
+
+	async findCar(carId) {
+		const car = await carRepository.findCarById(carId);
+
+		if (car) {
+			const items = await carRepository.carWithItems(carId);
+			car.items = items.map((item) => item.name);
+		}
+
+		return car;
+	},
 };
