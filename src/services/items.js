@@ -2,10 +2,6 @@ const itemRepository = require("../repository/items");
 const carRepository = require("../repository/cars");
 
 module.exports = {
-	async validations(items) {
-		const errors = [];
-	},
-
 	async insertCarItems(carId, items) {
 		const existingCar = await carRepository.findCarById(carId);
 
