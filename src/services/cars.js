@@ -61,8 +61,8 @@ module.exports = {
 			data: cars,
 		};
 	},
-  
-  async deleteCar(carId) {
+
+	async deleteCar(carId) {
 		const carExists = await carRepository.findCarById(carId);
 		if (!carExists) {
 			return false;

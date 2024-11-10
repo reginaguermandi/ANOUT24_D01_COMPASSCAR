@@ -23,7 +23,6 @@ module.exports = {
 	async getCars({ filters, limit, offset }) {
 		let query = knex("cars");
 
-		
 		if (filters.year) {
 			query.where("year", ">=", filters.year);
 		}
@@ -50,14 +49,12 @@ module.exports = {
 		const cars = await query.select("*").limit(limit).offset(offset);
 
 		return { count, cars };
-
 	},
-  
-  async deleteCarAndItems(carId) {
+
+	async deleteCarAndItems(carId) {
 		await knex.transaction(async function (trx) {
 			await trx("cars_items").where({ car_id: carId }).del();
 			await trx("cars").where({ id: carId }).del();
 		});
-  },
-  
+	},
 };
