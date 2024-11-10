@@ -39,7 +39,30 @@ module.exports = {
 		return car;
 	},
 
-	async deleteCar(carId) {
+	async getCar({ year, final_plate, brand, page, limit }) {
+		const limitValue = Math.min(Math.max(parseInt(limit), 1), 10);
+		const offset = (page - 1) * limitValue;
+
+		const filters = {};
+		if (year) filters.year = year;
+		if (final_plate) filters.final_plate = final_plate;
+		if (brand) filters.brand = brand;
+
+		const { count, cars } = await carRepository.getCars({
+			filters,
+			limit: limitValue,
+			offset,
+		});
+		const pages = Math.ceil(count / limitValue);
+
+		return {
+			count,
+			pages,
+			data: cars,
+		};
+	},
+  
+  async deleteCar(carId) {
 		const carExists = await carRepository.findCarById(carId);
 		if (!carExists) {
 			return false;

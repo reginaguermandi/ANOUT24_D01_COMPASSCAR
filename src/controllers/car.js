@@ -57,7 +57,26 @@ module.exports = {
 		}
 	},
 
-	async deleteCar(req, res) {
+	async listCar(req, res) {
+		try {
+			const { year, final_plate, brand, page = 1, limit = 5 } = req.query;
+
+			const result = await carService.getCar({
+				year,
+				final_plate,
+				brand,
+				page,
+				limit,
+			});
+
+			res.status(200).json(result);
+
+		} catch (error) {
+			return res.status(500).json({ errors: error.message });
+		}
+	},
+  
+  async deleteCar(req, res) {
 		try {
 			const carId = req.params.id;
 			const result = await carService.deleteCar(carId);
@@ -69,5 +88,6 @@ module.exports = {
 		} catch (error) {
 			return res.status(500).json({ errors: error.message });
 		}
-	},
+	}, 
+  
 };
