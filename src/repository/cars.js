@@ -19,4 +19,11 @@ module.exports = {
 	async carWithItems(carId) {
 		return await knex("cars_items").select("name").where("car_id", carId);
 	},
+
+	async deleteCarAndItems(carId) {
+		await knex.transaction(async function (trx) {
+			await trx("cars_items").where({ car_id: carId }).del();
+			await trx("cars").where({ id: carId }).del();
+		});
+	},
 };
