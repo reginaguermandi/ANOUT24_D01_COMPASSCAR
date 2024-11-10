@@ -1,4 +1,3 @@
-const { update } = require("../database/config");
 const carService = require("../services/cars");
 const itemService = require("../services/items");
 
@@ -20,6 +19,7 @@ module.exports = {
 
 				return res.status(400).json({ errors: newCar.errors });
 			}
+
 			return res.status(201).send(newCar);
 		} catch (error) {
 			return res.status(500).send({ error: error.message });
