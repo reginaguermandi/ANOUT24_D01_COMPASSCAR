@@ -23,7 +23,7 @@ module.exports = {
 	async getCars({ filters, limit, offset }) {
 		let query = knex("cars");
 
-		// Adicionando filtros à query de forma simples
+		
 		if (filters.year) {
 			query.where("year", ">=", filters.year);
 		}
@@ -36,7 +36,6 @@ module.exports = {
 			query.where("brand", "like", `%${filters.brand}%`);
 		}
 
-		// Contando o total de registros (aqui eu faria uma query separada para simplificar)
 		const countResult = await knex("cars")
 			.where((qb) => {
 				if (filters.year) qb.where("year", ">=", filters.year);
@@ -48,9 +47,17 @@ module.exports = {
 
 		const count = countResult[0]["count"];
 
-		// Buscando os registros com paginação
 		const cars = await query.select("*").limit(limit).offset(offset);
 
 		return { count, cars };
+
 	},
+  
+  async deleteCarAndItems(carId) {
+		await knex.transaction(async function (trx) {
+			await trx("cars_items").where({ car_id: carId }).del();
+			await trx("cars").where({ id: carId }).del();
+		});
+  },
+  
 };

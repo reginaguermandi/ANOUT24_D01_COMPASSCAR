@@ -70,8 +70,24 @@ module.exports = {
 			});
 
 			res.status(200).json(result);
+
 		} catch (error) {
 			return res.status(500).json({ errors: error.message });
 		}
 	},
+  
+  async deleteCar(req, res) {
+		try {
+			const carId = req.params.id;
+			const result = await carService.deleteCar(carId);
+
+			if (!result) {
+				return res.status(404).json({ errors: ["car not found"] });
+			}
+			return res.status(204).send();
+		} catch (error) {
+			return res.status(500).json({ errors: error.message });
+		}
+	}, 
+  
 };
