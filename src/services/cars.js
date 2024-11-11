@@ -71,4 +71,39 @@ module.exports = {
 		await carRepository.deleteCarAndItems(carId);
 		return true;
 	},
+
+	async updateCar(carId, carData) {
+		const carExists = await carRepository.findCarById(carId);
+		if (!carExists) {
+			return {
+				status: 404,
+				response: { errors: ["car not found"] },
+			};
+		}
+
+		if (carData.plate) {
+			const plateExists = await carRepository.existingPlate(
+				carData.plate,
+				carId
+			);
+			if (plateExists) {
+				return {
+					status: 409,
+					response: { errors: ["car already registered"] },
+				};
+			}
+		}
+
+		for (const key in carData) {
+			if (carData[key] === null || carData[key] === "") {
+				delete carData[key];
+			}
+		}
+
+		await carRepository.updateCar(carId, carData);
+		return {
+			status: 204,
+			response: null,
+		};
+	},
 };

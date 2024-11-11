@@ -88,4 +88,20 @@ module.exports = {
 			return res.status(500).json({ errors: error.message });
 		}
 	},
+
+	async updateCar(req, res) {
+		try {
+			const carId = req.params.id;
+			const carData = req.body;
+
+			const result = await carService.updateCar(carId, carData);
+			if (result.status === 204) {
+				return res.status(204).send();
+			}
+
+			return res.status(result.status).json(result.response);
+		} catch (error) {
+			return res.status(500).json({ errors: [error.message] });
+		}
+	},
 };
