@@ -24,22 +24,27 @@ cd ANOUT24_D01_COMPASSCAR
 npm install
 ```
 
-3. Crie e configure seu banco de dados:
+3. **Crie e configure seu banco de dados**:
 
-- Aplique as migrations do Knex para criar as tabelas necessárias:
+- Crie um arquivo .env para armazenar suas variáveis de ambiente:
+
+```
+BD_PASSWORD=sua_senha
+BD_CLIENT=seu_cliente
+BD_NAME=seu_banco_de_dados
+PORT=3000
+```
+
+4. Aplique as migrations do Knex para criar as tabelas necessárias:
 
 ```cmd
 npx knex migrate:latest
 ```
 
-4. Crie um arquivo .env para armazenar suas variáveis de ambiente:
+5. Aplique as seeds do Knex para popular as tabelas necessárias:
 
-```
-DB_HOST=localhost
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-DB_NAME=nome_do_banco
-PORT=3000
+```cmd
+npx knex seed:run
 ```
 
 5. Inicie o servidor:
