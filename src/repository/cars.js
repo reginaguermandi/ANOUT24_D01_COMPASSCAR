@@ -57,4 +57,15 @@ module.exports = {
 			await trx("cars").where({ id: carId }).del();
 		});
 	},
+
+	async existingPlate(plate, carId) {
+		return await knex("cars")
+			.where({ plate })
+			.andWhereNot({ id: carId })
+			.first();
+	},
+
+	async updateCar(carId, carData) {
+		await knex("cars").where({ id: carId }).update(carData);
+	},
 };

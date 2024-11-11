@@ -14,7 +14,7 @@ function validateItems(req, res, next) {
 		return res.status(400).json({ errors: "items cannot be repeated" });
 	}
 
-	next(); // Passa para o próximo middleware ou controller
+	next();
 }
 
 module.exports = validateItems;
